@@ -48,3 +48,11 @@ jobs:
             requirements-dev.txt
       - run: python -m pip install -r requirements-dev.txt
       - run: python -m pytest -v
+      - name: Check Docker Compose
+        run: |
+          docker compose up --build --wait
+          curl --fail --silent --show-error http://127.0.0.1:8000/health
+          curl --fail --silent --show-error --output /dev/null http://127.0.0.1:8000/docs
+      - name: Stop Docker Compose
+        if: always()
+        run: docker compose down

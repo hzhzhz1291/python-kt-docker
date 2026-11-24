@@ -27,7 +27,7 @@ docker compose up --build
 
 ## Проверки
 
-GitHub Actions запускает `python -m pytest -v` при push в `main`. Для тестов workflow поднимает отдельные сервисы PostgreSQL и Redis.
+GitHub Actions запускает `python -m pytest -v` при push в `main`. Для тестов workflow поднимает PostgreSQL и Redis. После тестов он запускает проект через Compose и проверяет `/health` и `/docs`.
 
 ## Railway
 
