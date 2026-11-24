@@ -1,0 +1,5 @@
+fastapi==0.165.0
+uvicorn>=0.35,<1
+SQLAlchemy>=2.0.40,<2.1
+psycopg[binary]==3.3.9
+redis>=6,<8
