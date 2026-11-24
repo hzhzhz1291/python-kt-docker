@@ -1,7 +1,6 @@
 import asyncio
 import os
 from contextlib import asynccontextmanager
-from decimal import Decimal
 from typing import Annotated
 
 from fastapi import Depends, FastAPI, HTTPException, Path, Query, Request
@@ -13,6 +12,7 @@ from sqlalchemy.exc import OperationalError, SQLAlchemyError
 from sqlalchemy.orm import Session
 from starlette.concurrency import run_in_threadpool
 
+from app.catalog import ProductView
 from app.database import get_db, init_database, make_engine
 from app.models import Category, Product
 
@@ -22,15 +22,6 @@ class CategoryView(BaseModel):
 
     id: int = Field(description="Идентификатор категории", examples=[1])
     name: str = Field(description="Название категории", examples=["Электроника"])
-
-
-class ProductView(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
-    id: int = Field(description="Идентификатор товара", examples=[1])
-    name: str = Field(description="Название товара", examples=["Кабель USB-C"])
-    price: Decimal = Field(description="Цена в рублях", examples=["990.00"])
-    category_id: int = Field(description="Идентификатор категории товара", examples=[1])
 
 
 @asynccontextmanager

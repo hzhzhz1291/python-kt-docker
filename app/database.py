@@ -1,11 +1,11 @@
 from collections.abc import Iterator
-from decimal import Decimal
 
 from fastapi import Request
 from sqlalchemy import Engine, create_engine, text
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
 
+from app.catalog import PRODUCTS
 from app.models import Base, Category, Product
 
 
@@ -26,11 +26,8 @@ def init_database(engine: Engine) -> None:
             {"id": 1, "name": "Электроника"},
             {"id": 2, "name": "Канцелярия"},
         ]).on_conflict_do_nothing())
-        connection.execute(insert(Product).values([
-            {"id": 1, "name": "Кабель USB-C", "price": Decimal("990.00"), "category_id": 1},
-            {"id": 2, "name": "Наушники", "price": Decimal("2490.00"), "category_id": 1},
-            {"id": 3, "name": "Блокнот", "price": Decimal("190.00"), "category_id": 2},
-        ]).on_conflict_do_nothing())
+        products = [product.model_dump() for product in PRODUCTS]
+        connection.execute(insert(Product).values(products).on_conflict_do_nothing())
 
 
 def get_db(request: Request) -> Iterator[Session]:
