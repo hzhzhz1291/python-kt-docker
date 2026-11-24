@@ -2,6 +2,8 @@
 
 Учебная КТ по Docker и CI/CD на основе каталога из работы по FastAPI. Схема товара и учебные товары перенесены из каталога. Приложение читает данные из PostgreSQL. Маршрут `/health` проверяет PostgreSQL и Redis.
 
+Публичное приложение на Railway — [Swagger UI](https://api-production-3d9503b1.up.railway.app/docs), [состояние сервиса](https://api-production-3d9503b1.up.railway.app/health).
+
 ## Локальный запуск
 
 ```sh
@@ -31,4 +33,4 @@ GitHub Actions запускает `python -m pytest -v` при push в `main`. �
 
 ## Railway
 
-Приложение собирается из `Dockerfile`. В сервисе приложения задайте `DATABASE_URL` и `REDIS_URL` как ссылки на внутренние переменные сервисов PostgreSQL и Redis. Проверка готовности настроена через `/health`. Swagger открывается на публичном адресе приложения по пути `/docs`.
+Railway берёт код из ветки `main` и собирает приложение из `Dockerfile`. Приложение подключается к PostgreSQL и Redis по внутренней сети через `DATABASE_URL` и `REDIS_URL`. Проверка готовности настроена через `/health`.
